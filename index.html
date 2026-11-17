@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-type="software">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <meta name="description" content="Organize, upload and edit your Flickr photos from one local workspace.">
+  <meta name="theme-color" content="#202c27">
+  <title>Flickr Manager</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Skip to photos</a>
+  <aside class="sidebar">
+    <header class="brand"><span class="brand-mark" aria-hidden="true"></span>Flickr Manager <button id="toggleAlbums" class="button subtle" aria-controls="albumsPanel" aria-expanded="false">Albums</button></header>
+    <div class="side-section">
+      <h2>Library</h2>
+      <button class="nav" data-view="all"><span><span aria-hidden="true">▦</span> All photos</span><span id="allCount"></span></button>
+      <button class="nav" data-view="unfiled"><span><span aria-hidden="true">◇</span> Not in an album</span><span id="unfiledCount"></span></button>
+    </div>
+    <div class="side-section album-section" id="albumsPanel">
+      <div class="section-title"><h2>Albums</h2><button class="square" id="newAlbum" aria-label="Create album" title="Create album">+</button></div>
+      <input type="search" id="albumSearch" placeholder="Find an album…" aria-label="Find an album">
+      <nav id="albumNav" aria-label="Albums"></nav>
+    </div>
+    <div class="account">
+      <span class="indicator" aria-hidden="true"></span>
+      <div><strong id="accountName">Sample library</strong><small id="accountHint">Local workspace</small></div>
+      <button id="connect" class="button subtle">Log in to Flickr</button>
+    </div>
+    <button id="credentialSettings" class="button subtle">API settings</button>
+  </aside>
+  <main id="workspace" tabindex="-1">
+    <header class="topbar">
+      <span id="breadcrumb">Library / All photos</span>
+      <div class="row"><button class="button" id="refresh" hidden>Refresh library</button><button id="upload" class="button primary">↑ Upload photos</button></div>
+    </header>
+    <section class="content" aria-labelledby="heading">
+      <div class="page-heading">
+        <div><h1 id="heading">All photos</h1><p id="context">Browse and organize your photo library.</p></div>
+        <div class="row" id="albumTools" hidden><a id="viewAlbum" class="button" target="_blank" rel="noopener noreferrer" hidden>Open on Flickr ↗</a><button id="reorderAlbum" class="button">Reorder photos</button><button id="editAlbum" class="button">Edit album</button><button id="deleteAlbum" class="button danger">Delete album</button></div>
+      </div>
+      <section class="grid-reorder" id="gridReorder" aria-label="Edit album order" hidden>
+        <div class="row grid-reorder-actions">
+          <strong>Reorder album</strong>
+          <select name="albumOrder" id="gridAlbumOrder" aria-label="Album order">
+            <option value="manual">Custom order</option>
+            <option value="newest">Newest uploads first</option>
+            <option value="oldest">Oldest uploads first</option>
+            <option value="title">Title A–Z</option>
+          </select>
+          <button class="button" id="moveGridTop" disabled>Move to top</button>
+          <button class="button" id="moveGridBottom" disabled>Move to bottom</button>
+          <button class="button" id="resetGridOrder">Reset order</button>
+          <button class="button" id="clearGridSelection" hidden>Clear selection</button>
+          <button class="button" id="cancelGridOrder">Cancel</button>
+          <button class="button primary" id="saveGridOrder">Save album order</button>
+        </div>
+        <p id="gridReorderHelp">Select photos to move them to the top or bottom. Drag thumbnails or use the arrows to place them between other photos.</p>
+        <p id="gridReorderStatus" role="status"></p>
+        <p id="gridReorderError" role="alert" hidden></p>
+      </section>
+      <div class="toolbar" id="photoToolbar">
+        <label class="search"><span aria-hidden="true">⌕</span><input id="query" type="search" placeholder="Search photo titles…" aria-label="Search photo titles"></label>
+        <select id="sort" aria-label="Sort photos"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="title">Title A–Z</option><option value="album" hidden>Album order</option></select>
+        <select id="filter" aria-label="Filter by visibility"><option value="">Any visibility</option><option value="public">Public</option><option value="private">Private</option><option value="friends">Friends</option><option value="family">Family</option><option value="friends-family">Friends and family</option></select>
+        <button class="button" id="selectMatching">Select all matching</button>
+      </div>
+      <div class="selection" id="selectionBar" hidden>
+        <strong id="selectionCount"></strong>
+        <div class="row"><button class="button" id="setAlbumCover" hidden>Set as album cover</button><button class="button" id="changeVisibility">Change visibility</button><button class="button" id="add">Add to album</button><button class="button" id="move">Move</button><button class="button" id="remove">Remove from album</button><button class="button" id="createSelected">Create album</button><button class="button danger" id="delete">Delete photos</button><button class="button subtle" id="clear">Clear</button></div>
+      </div>
+      <div class="result-row"><span id="resultCount" role="status"></span><div class="row"><button class="button subtle" id="activity" hidden>View activity</button><button class="button" id="stopWork" hidden>Stop after current</button></div></div>
+      <div class="work-status" id="workStatus" hidden><p id="workMessage" role="status"></p><progress id="workProgress" aria-label="Operation progress"></progress><p id="uploadStats" hidden></p></div>
+      <section class="queued-uploads" id="queuedUploads" aria-labelledby="queuedUploadsTitle" hidden>
+        <div class="row"><strong id="queuedUploadsTitle">Waiting uploads</strong><button class="button" id="continueUploads" hidden>Resume queue</button></div>
+        <p id="queuedUploadStatus"></p><ol id="queuedUploadList"></ol>
+      </section>
+      <div class="grid" id="grid"></div>
+      <button id="loadMore" class="button more" hidden>Load more</button>
+    </section>
+    <footer>This product uses the Flickr API but is not endorsed or certified by SmugMug, Inc.</footer>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialogTitle">
+    <form id="dialogForm" method="dialog">
+      <header class="dialog-head"><h2 id="dialogTitle"></h2><button class="square" id="closeDialog" type="button" aria-label="Close dialog">×</button></header>
+      <div class="dialog-body" id="dialogBody"></div>
+      <p class="dialog-error" id="dialogError" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" class="button" id="cancelDialog">Cancel</button><button class="button primary" id="submitDialog">Save</button></div>
+    </form>
+  </dialog>
+  <div class="notice" id="notice" role="status" hidden></div>
+</body>
+</html>
