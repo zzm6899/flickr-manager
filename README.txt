@@ -12,10 +12,11 @@ Start on Windows
    then choose Continue to Flickr. Approve the app shown on Flickr's
    consent page if you recognize it.
 
-The portable ZIP includes the official Node.js 24.22.3 Windows x64 runtime
-under runtime, so no installation or npm setup is needed. If you downloaded
-the source or use a different architecture, install Node.js 22 or newer
-on your PATH, or place the appropriate official executable at runtime\node.exe.
+The portable ZIP has the official Node.js 24.22.3 Windows x64 runtime in
+the runtime folder. You can use it without installing Node.js or setting up
+npm. If you downloaded the source or use a different architecture, install
+Node.js 22 or newer on your PATH, or put the official executable for your
+architecture at runtime\node.exe.
 Node downloads are available at https://nodejs.org/en/download.
 
 API credentials
@@ -24,7 +25,7 @@ Find your existing key and secret at https://www.flickr.com/services/apps/by/me
 Apply for a new key at https://www.flickr.com/services/api/keys/
 Flickr currently requires Pro to request a key. See
 https://www.flickrhelp.com/hc/en-us/articles/4404070036884-Flickr-API
-Your Flickr password is entered only on Flickr's website.
+Enter your Flickr password only on Flickr's website.
 
 Keep the launcher window open while you work. Press Ctrl+C in the launcher
 or close its window when finished. The app listens only on your computer.
@@ -77,11 +78,11 @@ Organize, edit and upload
   with their own album and settings. If an upload is unconfirmed or you stop
   the current batch, review Activity before resuming. Waiting batches and
   unsent files stay in this tab until you close or refresh it.
-- Flickr's duplicate check is on by default. When reselecting an old folder,
-  you can also opt in to skipping exact filenames already in the destination
-  album. Filenames shared by several files in the new queue still go through
-  the upload check. Matching titles are a shortcut, so leave this off if
-  different photos reuse filenames.
+- Flickr's duplicate check is on by default. If you select a folder again,
+  you can choose to skip exact filenames already in the destination album.
+  The upload check still runs when several files in the new queue share a
+  filename. The option matches titles, so leave it off if different photos
+  reuse filenames.
 - Permanent photo deletion needs separate Flickr authorization. After you
   authorize, select the photos again and confirm the deletion.
 
