@@ -2,6 +2,12 @@
 
 A portable Windows app by Zac Morgan for organizing a Flickr library from your browser.
 
+## Why I built it
+
+Flickr's web search can find albums by name and photos in my photostream. The individual album view lacks a search field for photo titles. [Flickr's search guide](https://www.flickrhelp.com/hc/en-us/articles/4404058806420-Search-Flickr-to-find-photos-people-or-groups)
+
+I built Flickr Manager so I could open a large album, type part of a photo title, and work with the matching thumbnails in the same view. I can then select the matches to move them, remove them from the album, or change their order.
+
 ## Get started
 
 1. Download the [portable Windows x64 ZIP](https://github.com/zzm6899/flickr-manager/releases/latest/download/Flickr-Manager-Windows-x64.zip) and extract the whole folder.
